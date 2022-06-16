@@ -1,2 +1,2 @@
 # hwp-fpga
-Versuche des Miniprojekts "FPGA-Prototyping" des Hardware-Praktikums an der LUH
+Beispiellösungen zu den Versuchen des Miniprojekts "FPGA-Prototyping" des Hardware-Praktikums an der LUH
