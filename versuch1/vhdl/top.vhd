@@ -10,7 +10,11 @@ ENTITY top IS
 	   
 	    led_g        : out std_ulogic; -- green LED for enable signal (1 Hz)
 	    leds_r       : out std_ulogic_vector(3 DOWNTO 0); -- 4 red LEDs for binary count
-	    hex_1, hex_0 : out std_ulogic_vector(6 DOWNTO 0) -- 7-segments
+	    hex_1, hex_0 : out std_ulogic_vector(6 DOWNTO 0); -- 7-segments
+	    
+	    --LEDs on Cmod-S7-Board
+	    led0_r, led0_g, led0_b : out std_ulogic; -- RGB-LED
+	    led                    : out std_ulogic_vector(3 downto 0)
 	);
 END ENTITY;
 
@@ -75,4 +79,11 @@ BEGIN
 	preset_sig <= "1111" XOR sws;
 	led_g      <= NOT clk_1hz_sig; -- to invert LED (Pull-Up)
     leds_r     <= "1111" XOR count_sig;
+    
+    --OnBoard LEDs
+    led0_r <= '1'; --active low
+    led0_b <= '1';
+    led0_g <= '1';
+    
+    led <= "0000";
 END ARCHITECTURE;
