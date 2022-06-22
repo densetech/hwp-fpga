@@ -25,7 +25,7 @@ ARCHITECTURE rtl OF clockgen IS
             counter := 0;
             clk_1hz_sig <= '1';
         ELSIF RISING_EDGE(clock) THEN
-            IF counter = 12000000 THEN
+            IF counter = 12000000 THEN --the value is related to the clock's actual frequency
                 clk_1hz_sig <= NOT clk_1hz_sig;
                 counter := 0;
             END IF;
