@@ -1,14 +1,22 @@
+------------------------------------------
+-- TODO: implement synchronous deassertion
+--       of reset
+------------------------------------------
+
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 
 ENTITY top IS
+	GENERIC (
+	    CLOCK_FREQ : NATURAL := 12000000 -- in MHz
+	);
 	PORT (
 		clock : IN STD_ULOGIC; -- 12 MHz
 
 		reset_n : IN STD_ULOGIC; -- asynchronous reset
-		sws : IN STD_ULOGIC_VECTOR(3 DOWNTO 0); -- switches for preset
+		sws : IN STD_ULOGIC_VECTOR(3 DOWNTO 0); -- switches for preset input
 
-		led_g : OUT STD_ULOGIC; -- green LED for enable signal (1 Hz)
+		led_g : OUT STD_ULOGIC; -- green LED for 1 Hz blink
 		leds_r : OUT STD_ULOGIC_VECTOR(3 DOWNTO 0); -- 4 red LEDs for binary count
 		hex_1, hex_0 : OUT STD_ULOGIC_VECTOR(6 DOWNTO 0); -- 7-segments
 
@@ -20,6 +28,9 @@ END ENTITY;
 
 ARCHITECTURE structural OF top IS
 	COMPONENT clockgen IS
+    	GENERIC (
+	        CLOCK_FREQ : NATURAL := 12000000 -- in MHz
+	    );
 		PORT (
 			clock : IN STD_ULOGIC;
 			reset : IN STD_ULOGIC;
@@ -53,6 +64,9 @@ ARCHITECTURE structural OF top IS
 	SIGNAL count_sig : STD_ULOGIC_VECTOR(3 DOWNTO 0);
 BEGIN
 	clockgen_inst : clockgen
+	GENERIC MAP (
+	    CLOCK_FREQ => CLOCK_FREQ
+	)
 	PORT MAP(
 		clock => clock,
 		reset => reset,
@@ -74,15 +88,15 @@ BEGIN
 		seven_seg_1 => hex_0
 	);
 
+	-- invert signals because of external pull ups
 	reset <= NOT reset_n;
-	preset_sig <= "1111" XOR sws;
-	led_g <= NOT clk_1hz_sig; -- to invert LED (Pull-Up)
-	leds_r <= "1111" XOR count_sig;
+	preset_sig <= NOT sws;
+	led_g <= NOT clk_1hz_sig;
+	leds_r <= NOT count_sig;
 
 	--OnBoard LEDs
-	led0_r <= '1'; --active low
+	led0_r <= '1'; --RGB-LED, active low
 	led0_b <= '1';
 	led0_g <= '1';
-
-	led <= "0000";
+	led    <= "0000"; --4 yellow LEDs, active high
 END ARCHITECTURE;

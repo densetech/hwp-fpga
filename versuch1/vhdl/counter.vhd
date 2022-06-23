@@ -4,9 +4,9 @@ USE IEEE.NUMERIC_STD.ALL;
 
 ENTITY counter IS
 	PORT (
-		clock : IN STD_ULOGIC; -- 1Hz
-		reset : IN STD_ULOGIC; -- reset count value
-		preset : IN STD_ULOGIC_VECTOR(3 DOWNTO 0);
+		clock : IN STD_ULOGIC; -- 1Hz divided clock
+		reset : IN STD_ULOGIC; -- resets the count output
+		preset : IN STD_ULOGIC_VECTOR(3 DOWNTO 0); -- add external offset/bias
 
 		count : OUT STD_ULOGIC_VECTOR(3 DOWNTO 0)
 	);
