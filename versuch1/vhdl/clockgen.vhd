@@ -24,7 +24,7 @@ BEGIN
 			counter := 0;
 			clk_1hz_sig <= '0';
 		ELSIF RISING_EDGE(clock) THEN
-			IF counter = 12000000 THEN
+			IF counter = 6000000 THEN
 				clk_1hz_sig <= NOT clk_1hz_sig;
 				counter := 0;
 			END IF;

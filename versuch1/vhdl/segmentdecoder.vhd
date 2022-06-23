@@ -31,7 +31,8 @@ BEGIN
 		WHEN "0111" => ret := "0000111";
 		WHEN "1000" => ret := "1111111";
 		WHEN "1001" => ret := "1101111";
-	END CASE; RETURN ret;
+	END CASE;
+	RETURN ret;
 END FUNCTION;
 
 BEGIN
@@ -40,5 +41,4 @@ BEGIN
 
 	seven_seg_1 <= decToSevenSeg(sign1);
 	seven_seg_10 <= decToSevenSeg(sign10);
-
 END ARCHITECTURE;
